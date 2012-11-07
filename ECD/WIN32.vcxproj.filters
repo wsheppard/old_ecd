@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{38712199-cebf-4124-bf15-398f7c3419ea}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Demo App Source">
+      <UniqueIdentifier>{34567deb-d5ab-4a56-8640-0aaec609521a}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Configuration Files">
+      <UniqueIdentifier>{19ff1a34-36de-4c48-9d10-3fb1fa0d1fa4}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="FreeRTOS">
+      <UniqueIdentifier>{6c32e846-8c0c-4648-8f71-1e48cf1a8369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demo App Headers">
+      <UniqueIdentifier>{b7e41f88-bd4a-42f5-aa34-71c97ee0ba3f}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.c">
+      <Filter>Demo App Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FreeRTOS\Source\croutine.c">
+      <Filter>FreeRTOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FreeRTOS\Source\list.c">
+      <Filter>FreeRTOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FreeRTOS\Source\queue.c">
+      <Filter>FreeRTOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FreeRTOS\Source\tasks.c">
+      <Filter>FreeRTOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FreeRTOS\Source\timers.c">
+      <Filter>FreeRTOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FreeRTOS\Source\portable\MSVC-MingW\port.c">
+      <Filter>FreeRTOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FreeRTOS\Source\portable\MemMang\heap_3.c">
+      <Filter>FreeRTOS</Filter>
+    </ClCompile>
+    <ClCompile Include="pwm.c">
+      <Filter>Demo App Source</Filter>
+    </ClCompile>
+    <ClCompile Include="keypad.c">
+      <Filter>Demo App Source</Filter>
+    </ClCompile>
+    <ClCompile Include="movement.c">
+      <Filter>Demo App Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FreeRTOSConfig.h">
+      <Filter>Configuration Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h">
+      <Filter>FreeRTOS</Filter>
+    </ClInclude>
+    <ClInclude Include="pwm.h">
+      <Filter>Demo App Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="keypad.h">
+      <Filter>Demo App Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="movement.h">
+      <Filter>Demo App Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\FreeRTOS\Source\readme.txt">
+      <Filter>FreeRTOS</Filter>
+    </None>
+  </ItemGroup>
+</Project>
