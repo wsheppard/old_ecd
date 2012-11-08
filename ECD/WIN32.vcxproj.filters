@@ -55,6 +55,9 @@
     <ClCompile Include="movement.c">
       <Filter>Demo App Source</Filter>
     </ClCompile>
+    <ClCompile Include="messaging.c">
+      <Filter>Demo App Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FreeRTOSConfig.h">
@@ -70,6 +73,12 @@
       <Filter>Demo App Headers</Filter>
     </ClInclude>
     <ClInclude Include="movement.h">
+      <Filter>Demo App Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="messaging.h">
+      <Filter>Demo App Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="messages.h">
       <Filter>Demo App Headers</Filter>
     </ClInclude>
   </ItemGroup>

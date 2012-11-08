@@ -138,6 +138,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="messaging.c" />
     <ClCompile Include="movement.c" />
     <ClCompile Include="pwm.c" />
   </ItemGroup>
@@ -145,6 +146,8 @@
     <ClInclude Include="..\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h" />
     <ClInclude Include="FreeRTOSConfig.h" />
     <ClInclude Include="keypad.h" />
+    <ClInclude Include="messages.h" />
+    <ClInclude Include="messaging.h" />
     <ClInclude Include="movement.h" />
     <ClInclude Include="pwm.h" />
   </ItemGroup>
