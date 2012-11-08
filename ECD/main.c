@@ -13,6 +13,10 @@
 #include "timers.h"
 #include "semphr.h"
 
+#include "messaging.h"
+#include "keypad.h"
+
+
 #define mainTIMER_TEST_PERIOD			( 50 )
 
 /* The variable into which error messages are latched. */
@@ -41,15 +45,18 @@ static void task1(void* bla){
 
 int main( void )
 {
+	xQueueHandle qKP; /* Queue handle for the KEYPAD */
 
 	printf("Starting the RTOS demo.....\n");
 
 	xTaskCreate( task1, "Hello", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);
 
-	/* Create the semaphore that will be deleted in the idle task hook.  This
-	is done purely to test the use of vSemaphoreDelete(). */
-	xMutexToDelete = xSemaphoreCreateMutex();
+	/* Create queue for keypad */
+	msg_newQueue(&qKP);
 
+	/* Start keypad task and give it the queue handle */
+	KP_startTask(qKP);
+	
 	/* Start the scheduler itself. */
 	vTaskStartScheduler();
 

@@ -12,8 +12,7 @@
 
 /* Private functions */
 static void KP_main(void*pvParams);
-
-static void KP_getCurrent(int*KP_data);
+static void KP_getCurrent(unsigned short *KP_data);
 
 /* Private Variables */
 xQueueHandle qKP;
@@ -45,8 +44,8 @@ int KP_startTask(xQueueHandle qHandle){
 
 static void KP_main(void*pvParams){
 
-	int KP_previousData = 0;
-	int KP_currentData = 0;
+	unsigned short KP_previousData = 0;
+	unsigned short KP_currentData = 0;
 	msg_message_s mMessage;
 
 	/* Get current values */
@@ -59,21 +58,35 @@ static void KP_main(void*pvParams){
 	
 		KP_getCurrent(&KP_currentData);
 
+		printf("Data is: %d, %d.\n", KP_previousData, KP_currentData);
+
+
+
 		/* If there is a change */
 		if (KP_previousData ^ KP_currentData){
 			mMessage.messageID = M_KPEVENT;
-			mMessage.messageDATA = (KP_currentData << 16) | (65535 & (KP_previousData ^ KP_currentData));
+			mMessage.messageDATA = (KP_currentData << 16) | ((unsigned short)65535 & (KP_previousData ^ KP_currentData));
+			
 			msg_send(qKP,mMessage);
+
+			KP_previousData = KP_currentData;
 		}
 
+		vTaskDelay(KP_DELAY);
 	
 	}
 
 }
 
 
-static void KP_getCurrent(int*KP_data){
+static void KP_getCurrent(unsigned short *KP_data){
+	/* Get the state of all the KeyPad buttons and put into a nice 16bits */
 
+	static unsigned short test = 45;
+
+	printf("Checking keypad....\n");
+
+	*KP_data ^= test;
 
 }
 

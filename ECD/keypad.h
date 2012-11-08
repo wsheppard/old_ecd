@@ -1,3 +1,6 @@
+#ifndef KEYPAD_H
+#define KEYPAD_H
+
 /* Free RTOS includes */
 #include <FreeRTOS.h>
 #include "task.h"
@@ -17,3 +20,5 @@
 /* Called to start off the task; Give the message queue handle to 
 	which it should put keypad events onto. if successful it will return ok. */
 int KP_startTask(xQueueHandle);
+
+#endif

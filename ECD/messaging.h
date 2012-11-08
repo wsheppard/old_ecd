@@ -1,3 +1,6 @@
+#ifndef MESSAGING_H
+#define MESSAGING_H
+
 /* Standard includes. */
 #include <stdio.h>
 
@@ -11,8 +14,8 @@
 
 /* Data type for sending message */
 typedef struct {
-	int messageID;
-	int messageDATA;
+	unsigned int messageID;
+	unsigned int messageDATA;
 }msg_message_s;
 
 typedef xQueueHandle msg_handle;
@@ -30,3 +33,5 @@ int msg_send(xQueueHandle, msg_message_s);
 
 /* Wait for message indefinately */
 int msg_recv(xQueueHandle, msg_message_s*);
+
+#endif
