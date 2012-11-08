@@ -7,4 +7,4 @@
 /* Movement module */
 #define M_MOVE_CONT 2 /* Start continous movement */
 #define M_MOVE_SPEC 3 /* Move 'gracefully' to a specific place */
-#define M_MOVE_STOP 3 /* STOP moving */
+#define M_MOVE_STOP 4 /* STOP moving */
