@@ -9,13 +9,14 @@
 #include "semphr.h"
 
 /* Local Includes */
+#include "ECD.h"
 #include "messaging.h"
 
 /* How often to POLL (in ticks between polls).*/
 #define KP_DELAY 1000
 
 /* Task priority */
-#define KP_PRIORITY 0
+#define KP_PRIORITY tskIDLE_PRIORITY
 
 /* Called to start off the task; Give the message queue handle to 
 	which it should put keypad events onto. if successful it will return ok. */

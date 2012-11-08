@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h" />
+    <ClInclude Include="ECD.h" />
     <ClInclude Include="FreeRTOSConfig.h" />
     <ClInclude Include="keypad.h" />
     <ClInclude Include="messages.h" />

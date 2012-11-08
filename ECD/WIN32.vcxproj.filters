@@ -81,6 +81,9 @@
     <ClInclude Include="messages.h">
       <Filter>Demo App Headers</Filter>
     </ClInclude>
+    <ClInclude Include="ECD.h">
+      <Filter>Demo App Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\FreeRTOS\Source\readme.txt">

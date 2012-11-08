@@ -1,8 +1,5 @@
 #include "messaging.h"
 
-//static xQueueHandle msg_queues[MSG_MAX_QUEUES] = {NULL,};
-//static int msg_queueCount = 0;
-
 int msg_newQueue(xQueueHandle*qhandle){
 	
 	xQueueHandle tempHandle = NULL;
@@ -10,20 +7,20 @@ int msg_newQueue(xQueueHandle*qhandle){
 
 	/* Sanity */
 	if (qhandle == NULL){
-		return -1;
+		return ECD_ERROR;
 	}
 
 	if (tempHandle == 0) {
 		/* Return error as couldn't create queue */
-		return -1;
+		return ECD_ERROR;
 	}
 	else {
 		/* Set handle and return OK */
 		*qhandle = tempHandle;
-		return 0;
+		return ECD_OK;
 	}
 
-	return -1;
+	return ECD_ERROR;
 
 }
 
@@ -34,7 +31,7 @@ int msg_rmQueue(xQueueHandle qHandle){
 
 	vQueueDelete(qHandle);
 	
-	return 0;
+	return ECD_OK;
 }
 
 
@@ -54,13 +51,26 @@ int msg_send(xQueueHandle qHandle, msg_message_s msgMessage){
 }
 
 
-int msg_recv(xQueueHandle qHandle, msg_message_s*pMessage){
+
+int msg_recv_noblock(xQueueHandle qHandle, msg_message_s*pMessage){
 
 	if (qHandle == NULL){
 		return -1;
 	}
 
-	xQueueReceive( qHandle, pMessage, ( portTickType ) 10 );
+	xQueueReceive( qHandle, pMessage, 0 );
+	
+	return 0;
+
+}
+
+int msg_recv_block(xQueueHandle qHandle, msg_message_s*pMessage){
+
+	if (qHandle == NULL){
+		return -1;
+	}
+
+	xQueueReceive( qHandle, pMessage, portMAX_DELAY );
 	
 	return 0;
 

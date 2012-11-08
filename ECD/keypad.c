@@ -22,7 +22,7 @@ xTaskHandle tKP;
 int KP_startTask(xQueueHandle qHandle){
 	
 	if (qHandle == NULL)
-		return -1;
+		return ECD_ERROR;
 
 	/* Keep copy of the Queue Handle to use */
 	qKP = qHandle;
@@ -35,10 +35,10 @@ int KP_startTask(xQueueHandle qHandle){
 		KP_PRIORITY, 
 		&tKP) != pdPASS){
 	
-			return -1;
+			return ECD_ERROR;
 	} 
 
-	return 0;
+	return ECD_OK;
 
 }
 
