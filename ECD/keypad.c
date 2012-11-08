@@ -64,7 +64,7 @@ static void KP_main(void*pvParams){
 
 		/* If there is a change */
 		if (KP_previousData ^ KP_currentData){
-			mMessage.messageID = M_KPEVENT;
+			mMessage.messageID = M_KP_EVENT;
 			mMessage.messageDATA = (KP_currentData << 16) | ((unsigned short)65535 & (KP_previousData ^ KP_currentData));
 			
 			msg_send(qKP,mMessage);

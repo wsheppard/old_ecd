@@ -77,10 +77,10 @@ int move_Start(xQueueHandle qHandle){
 
 static void move_main_task(void* params){
 
-	printf("Movement main task created...\n");
-	
-	msg_message_s msgMessage;
+		msg_message_s msgMessage;
 
+		printf("Movement main task created...\n");
+	
 	/* So now wait for commands to come through from the Main Manager
 	and send them to the relevant servo task to execute */
 	msg_recv_block(qMove, &msgMessage);
@@ -111,6 +111,7 @@ static void move_servo_task(void *params){
 			case M_MOVE_STOP:
 				break;
 			default:
+				break;
 		}
 
 
