@@ -11,9 +11,11 @@
 /* This is the INCOMING queue */
 static xQueueHandle qMove;
 
+/* Position info is kept in the servo task */
 typedef struct {
 	xQueueHandle qServo;
 	int iServoID;
+	unsigned position;
 }move_servoData_s;
 
 static float move_sigmoid(float time); /* Find sigmoid position */
@@ -158,14 +160,19 @@ void move_servo_cont(move_servoData_s *sData, int direction){
 				return;
 			}
 			else{
-				printf("Servo task %d STOPPING %s.\n", sData->iServoID,direction ? "INC": "DEC");
+				//printf("Servo task %d STOPPING %s.\n", sData->iServoID,direction ? "INC": "DEC");
 				return;
 			}
 		}
 	
 		/* So no message received, move one step */
-		printf("Servo task %d moving %s STEP.\n", sData->iServoID,direction ? "INC": "DEC");
+		//printf("Servo task %d moving %s STEP.\n", sData->iServoID,direction ? "INC": "DEC");
 	
+		if (direction & M_MOVE_DIRMASK)
+			pwm_jump(sData->iServoID, MOVE_JUMPVAL);
+		else
+			pwm_jump(sData->iServoID, -MOVE_JUMPVAL);
+
 		vTaskDelay(MOVE_LATENCY);
 	
 	

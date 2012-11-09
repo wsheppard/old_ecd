@@ -71,11 +71,11 @@ int msg_recv_noblock(xQueueHandle qHandle, msg_message_s*pMessage){
 int msg_recv_block(xQueueHandle qHandle, msg_message_s*pMessage){
 
 	if (qHandle == NULL){
-		return -1;
+		return ECD_ERROR;
 	}
 
 	xQueueReceive( qHandle, pMessage, portMAX_DELAY );
 	
-	return 0;
+	return ECD_OK;
 
 }

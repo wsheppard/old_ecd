@@ -11,6 +11,7 @@
 /* Config */
 #define MOVE_LATENCY 100
 #define SERVO_COUNT PWM_COUNT
+#define MOVE_JUMPVAL 2
 
 /* Task priority */
 #define MOVE_PRIORITY tskIDLE_PRIORITY 

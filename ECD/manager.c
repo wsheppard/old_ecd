@@ -16,6 +16,7 @@
 #include "messaging.h"
 #include "keypad.h"
 #include "movement.h"
+#include "pwm.h"
 
 /* Private Functions */
 static void man_main(void*params);
@@ -40,6 +41,8 @@ int man_start(void){
 
 	/* Start movement task and give it the queue handle */
 	move_Start(qMOVE);
+
+	pwm_init();
 
 	/* Now start the manager task */
 	xTaskCreate( man_main, "ManagerTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);
@@ -77,11 +80,11 @@ static void man_main(void*params){
 			if (changed & 1){
 			
 				if(state & 1){
-					printf("Key at pos %d pressed.\n", shifted);
+					//printf("Key at pos %d pressed.\n", shifted);
 					man_key_down(shifted);
 				}
 				else{
-					printf("Key at pos %d released.\n", shifted);
+					//printf("Key at pos %d released.\n", shifted);
 					man_key_up(shifted);
 				}
 			

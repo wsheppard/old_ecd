@@ -13,7 +13,7 @@
 #include "messaging.h"
 
 /* How often to POLL (in ticks between polls).*/
-#define KP_DELAY 300
+#define KP_DELAY 50
 
 /* Task priority */
 #define KP_PRIORITY tskIDLE_PRIORITY

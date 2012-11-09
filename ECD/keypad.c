@@ -9,6 +9,7 @@
 
 /* Local includes */
 #include "keypad.h"
+#include "pwm.h"
 
 /* Private functions */
 static void kp_main(void*pvParams);
@@ -47,6 +48,7 @@ static void kp_main(void*pvParams){
 	unsigned short kp_previousData = 0;
 	unsigned short kp_currentData = 0;
 	msg_message_s mMessage;
+	unsigned int a,b,c,d;
 
 	/* Get current values */
 	//kp_getCurrent(&kp_currentData);
@@ -63,7 +65,13 @@ static void kp_main(void*pvParams){
 		kp_getCurrent(&kp_currentData);
 
 		//printf("Data: Previous[%x], Current:[%x].\n", kp_previousData, kp_currentData);
-
+		
+		pwm_get_pos(0,&a);
+		pwm_get_pos(1,&b);
+		pwm_get_pos(2,&c);
+		pwm_get_pos(3,&d);
+		
+		printf("Servos are at: [%u],[%u],[%u],[%u].\n",a,b,c,d);
 
 
 		/* If there is a change */
