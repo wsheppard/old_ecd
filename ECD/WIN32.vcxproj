@@ -138,6 +138,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="manager.c" />
     <ClCompile Include="messaging.c" />
     <ClCompile Include="movement.c" />
     <ClCompile Include="pwm.c" />
@@ -147,6 +148,7 @@
     <ClInclude Include="ECD.h" />
     <ClInclude Include="FreeRTOSConfig.h" />
     <ClInclude Include="keypad.h" />
+    <ClInclude Include="manager.h" />
     <ClInclude Include="messages.h" />
     <ClInclude Include="messaging.h" />
     <ClInclude Include="movement.h" />

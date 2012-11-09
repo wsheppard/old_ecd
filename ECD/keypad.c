@@ -11,15 +11,15 @@
 #include "keypad.h"
 
 /* Private functions */
-static void KP_main(void*pvParams);
-static void KP_getCurrent(unsigned short *KP_data);
+static void kp_main(void*pvParams);
+static void kp_getCurrent(unsigned short *KP_data);
 
 /* Private Variables */
 xQueueHandle qKP;
 xTaskHandle tKP;
 
 
-int KP_startTask(xQueueHandle qHandle){
+int kp_startTask(xQueueHandle qHandle){
 	
 	if (qHandle == NULL)
 		return ECD_ERROR;
@@ -28,7 +28,7 @@ int KP_startTask(xQueueHandle qHandle){
 	qKP = qHandle;
 
 	/* Create main task; return -1 on error */
-	if (xTaskCreate( KP_main, 
+	if (xTaskCreate( kp_main, 
 		"KP Main Thread", 
 		configMINIMAL_STACK_SIZE, 
 		NULL, 
@@ -42,34 +42,38 @@ int KP_startTask(xQueueHandle qHandle){
 
 }
 
-static void KP_main(void*pvParams){
+static void kp_main(void*pvParams){
 
-	unsigned short KP_previousData = 0;
-	unsigned short KP_currentData = 0;
+	unsigned short kp_previousData = 0;
+	unsigned short kp_currentData = 0;
 	msg_message_s mMessage;
 
 	/* Get current values */
-	KP_getCurrent(&KP_currentData);
+	//kp_getCurrent(&kp_currentData);
 
-	KP_previousData = KP_currentData;
+	//kp_previousData = kp_currentData;
+	kp_previousData = 0;
+
+
+	printf("Keypad starting...\n");
 
 	/* Start checking for keypad changes and then send as message */
 	while(1){
 	
-		KP_getCurrent(&KP_currentData);
+		kp_getCurrent(&kp_currentData);
 
-		printf("Data is: %d, %d.\n", KP_previousData, KP_currentData);
+		//printf("Data: Previous[%x], Current:[%x].\n", kp_previousData, kp_currentData);
 
 
 
 		/* If there is a change */
-		if (KP_previousData ^ KP_currentData){
+		if (kp_previousData ^ kp_currentData){
 			mMessage.messageID = M_KP_EVENT;
-			mMessage.messageDATA = (KP_currentData << 16) | ((unsigned short)65535 & (KP_previousData ^ KP_currentData));
+			mMessage.messageDATA = (kp_currentData << 16) | ((unsigned short)65535 & (kp_previousData ^ kp_currentData));
 			
 			msg_send(qKP,mMessage);
 
-			KP_previousData = KP_currentData;
+			kp_previousData = kp_currentData;
 		}
 
 		vTaskDelay(KP_DELAY);
@@ -79,14 +83,31 @@ static void KP_main(void*pvParams){
 }
 
 
-static void KP_getCurrent(unsigned short *KP_data){
+static void kp_getCurrent(unsigned short *KP_data){
 	/* Get the state of all the KeyPad buttons and put into a nice 16bits */
 
+	int x,y;
+	static unsigned short output = 1;
 	static unsigned short test = 45;
 
-	printf("Checking keypad....\n");
+	//printf("Checking keypad....\n");
 
-	*KP_data ^= test;
 
+
+	for (x=0;x<4;x++){
+	
+		/* Set the relevant register to LOW */
+
+		for (y=0;y<4;y++){
+		
+			/* Check if the particular key is pressed */
+		
+		}
+	
+	}
+
+
+	*KP_data = output;
+	output <<= 1;
 }
 

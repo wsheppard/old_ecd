@@ -8,11 +8,12 @@
 
 #include "movement.h"
 
-/* Individual servo tasks, one spawned for each servo */
-static void move_servo_task(void *params);
 
-/* Main task manager for this module */
-static void move_main_task(void* params);
+static float move_sigmoid(float time); /* Find sigmoid position */
+static void move_servo_task(void *params); /* Individual servo tasks, one spawned for each servo */
+static void move_main_task(void* params); /* Main task manager for this module */
+static void move_servo_cont(void); /* Move loop */
+
 
 /* This is the INCOMING queue */
 static xQueueHandle qMove;
@@ -77,25 +78,44 @@ int move_Start(xQueueHandle qHandle){
 
 static void move_main_task(void* params){
 
-		msg_message_s msgMessage;
+	msg_message_s msgMessage;
+	int servoID;
 
-		printf("Movement main task created...\n");
-	
-	/* So now wait for commands to come through from the Main Manager
-	and send them to the relevant servo task to execute */
-	msg_recv_block(qMove, &msgMessage);
+	printf("Movement main task created...\n");
+
+	while(1){
+		/* So now wait for commands to come through from the Main Manager
+		and send them to the relevant servo task to execute */
+		msg_recv_block(qMove, &msgMessage);
+
+		switch (msgMessage.messageID){
+			case M_MOVE_CONT:
+			case M_MOVE_STOP:
+				servoID = msgMessage.messageDATA;
+				if (servoID >=PWM_COUNT) break;
+				msg_send(ServoData[servoID].qServo,msgMessage);
+				//printf("Starting movement on servo %d.\n",msgMessage.messageDATA);
+				break;
+			case M_MOVE_SPEC:
+				break;
+			default:
+				break;
+		}
+		
+	}
 
 } 
 
 static void move_servo_task(void *params){
 
 	move_servoData_s servoData;
-	int position;
+	int position = 0;
 	msg_message_s msgMessage;
 
 	/* Grab local copy of the queue handle */
 	servoData = *(move_servoData_s*)params;
 
+	//printf("I am servo task %d.\n", servoData.iServoID);
 
 	while(1){
 
@@ -105,19 +125,34 @@ static void move_servo_task(void *params){
 		/* Is it a Specific Move, or Continous Move command? */
 		switch (msgMessage.messageID){
 			case M_MOVE_CONT:
+				printf("Servo task %d started moving.\n", servoData.iServoID);
+				//move_servo_cont();
 				break;
 			case M_MOVE_SPEC:
 				break;
 			case M_MOVE_STOP:
+				printf("Servo task %d stopped moving.\n", servoData.iServoID);
+				//printf("Stopping movement on servo %d.\n",msgMessage.messageDATA);
 				break;
 			default:
 				break;
 		}
-
-
-	pwm_set_pos(servoData.iServoID, position);
-
+		//pwm_set_pos(servoData.iServoID, position);
 	}
 }
 
 
+static void move_servo_cont(void){
+	
+	/* Need to know direction and servo number! */
+
+	/* Move one step of continous move */
+
+
+}
+
+float move_sigmoid(float time){
+
+
+
+}

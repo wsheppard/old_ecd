@@ -13,50 +13,31 @@
 #include "timers.h"
 #include "semphr.h"
 
-#include "messaging.h"
-#include "keypad.h"
-
+#include "manager.h"
+#include "ECD.h"
 
 #define mainTIMER_TEST_PERIOD			( 50 )
 
-/* The variable into which error messages are latched. */
-static char *pcStatusMessage = "OK";
-
-/* This semaphore is created purely to test using the vSemaphoreDelete() and
-semaphore tracing API functions.  It has no other purpose. */
-static xSemaphoreHandle xMutexToDelete = NULL;
-
-static void task1(void* bla);
-
 /*-----------------------------------------------------------*/
-
-
-
-static void task1(void* bla){
-	
-	while(1){
-		printf("Hello\n");
-		vTaskDelay(100);
-	}
-
-
-}
-
 
 int main( void )
 {
 	xQueueHandle qKP; /* Queue handle for the KEYPAD */
 
 	printf("Starting the RTOS demo.....\n");
-
-	xTaskCreate( task1, "Hello", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);
-
-	/* Create queue for keypad */
-	msg_newQueue(&qKP);
-
-	/* Start keypad task and give it the queue handle */
-	KP_startTask(qKP);
 	
+	/* Starting off the manager thread */
+	if (man_start()!=ECD_OK){
+	
+		printf("Cannot start, halting system!\n");
+
+		while(1){
+		
+			Sleep(1000);
+		}
+	
+	}
+		
 	/* Start the scheduler itself. */
 	vTaskStartScheduler();
 

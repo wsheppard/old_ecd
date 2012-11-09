@@ -44,7 +44,7 @@ int msg_send(xQueueHandle qHandle, msg_message_s msgMessage){
 		return -1;
 	}
 	else{
-		printf("Sent message...\n");
+		//printf("Sent message...\n");
 		return 0;
 	}
 
