@@ -59,6 +59,8 @@ static void kp_main(void*pvParams){
 
 	printf("Keypad starting...\n");
 
+	vTaskDelay(1000);
+
 	/* Start checking for keypad changes and then send as message */
 	while(1){
 	
@@ -66,13 +68,7 @@ static void kp_main(void*pvParams){
 
 		//printf("Data: Previous[%x], Current:[%x].\n", kp_previousData, kp_currentData);
 		
-		pwm_get_pos(0,&a);
-		pwm_get_pos(1,&b);
-		pwm_get_pos(2,&c);
-		pwm_get_pos(3,&d);
-		
-		printf("Servos are at: [%u],[%u],[%u],[%u].\n",a,b,c,d);
-
+	
 
 		/* If there is a change */
 		if (kp_previousData ^ kp_currentData){
@@ -96,7 +92,6 @@ static void kp_getCurrent(unsigned short *KP_data){
 
 	int x,y;
 	static unsigned short output = 3;
-	static unsigned short test = 45;
 
 	//printf("Checking keypad....\n");
 

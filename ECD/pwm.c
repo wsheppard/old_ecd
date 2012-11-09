@@ -19,7 +19,7 @@ pwm_servo_data_s servo_data[PWM_COUNT]={
 	{ADD_SERVO4,0,50},
 };
 
-xSemaphoreHandle xSemaphore = NULL;
+static xSemaphoreHandle xSemaphore = NULL;
 
 int pwm_init(void){
 	

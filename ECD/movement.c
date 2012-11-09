@@ -11,20 +11,20 @@
 /* This is the INCOMING queue */
 static xQueueHandle qMove;
 
+static xSemaphoreHandle xSemaphore = NULL;
+
 /* Position info is kept in the servo task */
 typedef struct {
 	xQueueHandle qServo;
 	int iServoID;
 	unsigned position;
+	int state;
 }move_servoData_s;
 
 static float move_sigmoid(float time); /* Find sigmoid position */
 static void move_servo_task(void *params); /* Individual servo tasks, one spawned for each servo */
 static void move_main_task(void* params); /* Main task manager for this module */
 static void move_servo_cont(move_servoData_s *sData, int direction); /* Move loop */
-
-
-
 
 /* These are the queues going off to the servo tasks */
 static move_servoData_s ServoData[SERVO_COUNT];
@@ -63,7 +63,7 @@ int move_Start(xQueueHandle qHandle){
 
 	}
 
-
+	xSemaphore = xSemaphoreCreateMutex();
 
 	/* Create main task; return -1 on error */
 	if (xTaskCreate( move_main_task, 
@@ -130,6 +130,7 @@ static void move_servo_task(void *params){
 		switch (msgMessage.messageID){
 			case M_MOVE_CONT:
 				move_servo_cont(&servoData,(msgMessage.messageDATA & M_MOVE_DIRMASK));
+				ServoData[servoData.iServoID].state = MOVE_STATE_STOP;
 				break;
 			case M_MOVE_SPEC:
 				break;
@@ -150,6 +151,11 @@ void move_servo_cont(move_servoData_s *sData, int direction){
 	
 	int quit = 0;
 	msg_message_s msgMessage;
+
+	if (direction & M_MOVE_DIRMASK) 
+		ServoData[sData->iServoID].state = MOVE_STATE_INC;
+	else
+		ServoData[sData->iServoID].state = MOVE_STATE_DEC;
 
 	while (1){
 
@@ -180,8 +186,11 @@ void move_servo_cont(move_servoData_s *sData, int direction){
 
 }
 
-float move_sigmoid(float time){
+int move_get_state(int servo, int*state){
 
-
-
+	/* This might need mutex protection if it become an important thing, atm its
+		just used in displaying so not really worth it. */
+	*state = ServoData[servo].state;
+		
+	return ECD_OK;
 }

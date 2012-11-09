@@ -17,6 +17,7 @@
 #include "keypad.h"
 #include "movement.h"
 #include "pwm.h"
+#include "display.h"
 
 /* Private Functions */
 static void man_main(void*params);
@@ -26,7 +27,6 @@ static void man_key_up(int key);
 /* Queues */
 static xQueueHandle qKP;
 static xQueueHandle qMOVE;
-//static xQueueHandle qKP;
 
 int man_start(void){
 
@@ -43,6 +43,7 @@ int man_start(void){
 	move_Start(qMOVE);
 
 	pwm_init();
+	display_init();
 
 	/* Now start the manager task */
 	xTaskCreate( man_main, "ManagerTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);

@@ -61,6 +61,9 @@
     <ClCompile Include="manager.c">
       <Filter>Demo App Source</Filter>
     </ClCompile>
+    <ClCompile Include="display.c">
+      <Filter>Demo App Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FreeRTOSConfig.h">
@@ -88,6 +91,9 @@
       <Filter>Demo App Headers</Filter>
     </ClInclude>
     <ClInclude Include="manager.h">
+      <Filter>Demo App Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="display.h">
       <Filter>Demo App Headers</Filter>
     </ClInclude>
   </ItemGroup>

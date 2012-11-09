@@ -132,6 +132,9 @@
     <ClCompile Include="..\FreeRTOS\Source\queue.c" />
     <ClCompile Include="..\FreeRTOS\Source\tasks.c" />
     <ClCompile Include="..\FreeRTOS\Source\timers.c" />
+    <ClCompile Include="display.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
     <ClCompile Include="keypad.c" />
     <ClCompile Include="main.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -145,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h" />
+    <ClInclude Include="display.h" />
     <ClInclude Include="ECD.h" />
     <ClInclude Include="FreeRTOSConfig.h" />
     <ClInclude Include="keypad.h" />
