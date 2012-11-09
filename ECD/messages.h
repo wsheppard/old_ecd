@@ -31,8 +31,13 @@
 #define M_MOVE_RESET 7 /* delete all saved positions */
 #define M_MOVE_RMLAST 8 /* Remove last saved position */
 
+/* For the MOVE CONT message, the DATA is as follows:
+	* the lsBYTE is the servo number
+	* the 8th but is the direction
+	*/
 #define M_MOVE_SERVO1 0
 #define M_MOVE_SERVO2 1
 #define M_MOVE_SERVO3 2
 #define M_MOVE_SERVO4 3
-
+#define M_MOVE_SERVOMASK 255
+#define M_MOVE_DIRMASK 256

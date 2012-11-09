@@ -87,12 +87,10 @@ static void kp_getCurrent(unsigned short *KP_data){
 	/* Get the state of all the KeyPad buttons and put into a nice 16bits */
 
 	int x,y;
-	static unsigned short output = 1;
+	static unsigned short output = 3;
 	static unsigned short test = 45;
 
 	//printf("Checking keypad....\n");
-
-
 
 	for (x=0;x<4;x++){
 	

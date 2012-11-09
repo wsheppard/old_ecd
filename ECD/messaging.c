@@ -55,12 +55,16 @@ int msg_send(xQueueHandle qHandle, msg_message_s msgMessage){
 int msg_recv_noblock(xQueueHandle qHandle, msg_message_s*pMessage){
 
 	if (qHandle == NULL){
-		return -1;
+		return ECD_ERROR;
 	}
 
-	xQueueReceive( qHandle, pMessage, 0 );
-	
-	return 0;
+	if(pdTRUE==xQueueReceive( qHandle, pMessage, 0 )){
+		return ECD_OK;
+	}
+	else{
+		return ECD_NOMSG;
+	}
+
 
 }
 

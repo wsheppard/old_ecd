@@ -108,20 +108,41 @@ void man_key_down(int key){
 	switch (key){
 	case M_KP_KEY_A1:
 		msgMessage.messageID = M_MOVE_CONT;
-		msgMessage.messageDATA = M_MOVE_SERVO1;
+		msgMessage.messageDATA = M_MOVE_SERVO1 | M_MOVE_DIRMASK;
 		msg_send(qMOVE,msgMessage);
 		break;
 	case M_KP_KEY_A2:
 		msgMessage.messageID = M_MOVE_CONT;
-		msgMessage.messageDATA = M_MOVE_SERVO2;
+		msgMessage.messageDATA = M_MOVE_SERVO2 | M_MOVE_DIRMASK;
 		msg_send(qMOVE,msgMessage);
 		break;
 	case M_KP_KEY_A3:
 		msgMessage.messageID = M_MOVE_CONT;
-		msgMessage.messageDATA = M_MOVE_SERVO3;
+		msgMessage.messageDATA = M_MOVE_SERVO3 | M_MOVE_DIRMASK;
 		msg_send(qMOVE,msgMessage);
 		break;
 	case M_KP_KEY_A4:
+		msgMessage.messageID = M_MOVE_CONT;
+		msgMessage.messageDATA = M_MOVE_SERVO4 | M_MOVE_DIRMASK;
+		msg_send(qMOVE,msgMessage);
+		break;
+	
+	case M_KP_KEY_B1:
+		msgMessage.messageID = M_MOVE_CONT;
+		msgMessage.messageDATA = M_MOVE_SERVO1;
+		msg_send(qMOVE,msgMessage);
+		break;
+	case M_KP_KEY_B2:
+		msgMessage.messageID = M_MOVE_CONT;
+		msgMessage.messageDATA = M_MOVE_SERVO2;
+		msg_send(qMOVE,msgMessage);
+		break;
+	case M_KP_KEY_B3:
+		msgMessage.messageID = M_MOVE_CONT;
+		msgMessage.messageDATA = M_MOVE_SERVO3;
+		msg_send(qMOVE,msgMessage);
+		break;
+	case M_KP_KEY_B4:
 		msgMessage.messageID = M_MOVE_CONT;
 		msgMessage.messageDATA = M_MOVE_SERVO4;
 		msg_send(qMOVE,msgMessage);
@@ -164,5 +185,26 @@ void man_key_up(int key){
 		msg_send(qMOVE,msgMessage);
 		break;
 
+
+	case M_KP_KEY_B1:
+		msgMessage.messageID = M_MOVE_STOP;
+		msgMessage.messageDATA = M_MOVE_SERVO1;
+		msg_send(qMOVE,msgMessage);
+		break;
+	case M_KP_KEY_B2:
+		msgMessage.messageID = M_MOVE_STOP;
+		msgMessage.messageDATA = M_MOVE_SERVO2;
+		msg_send(qMOVE,msgMessage);
+		break;
+	case M_KP_KEY_B3:
+		msgMessage.messageID = M_MOVE_STOP;
+		msgMessage.messageDATA = M_MOVE_SERVO3;
+		msg_send(qMOVE,msgMessage);
+		break;
+	case M_KP_KEY_B4:
+		msgMessage.messageID = M_MOVE_STOP;
+		msgMessage.messageDATA = M_MOVE_SERVO4;
+		msg_send(qMOVE,msgMessage);
+		break;
 	}
 }

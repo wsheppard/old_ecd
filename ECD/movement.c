@@ -8,13 +8,6 @@
 
 #include "movement.h"
 
-
-static float move_sigmoid(float time); /* Find sigmoid position */
-static void move_servo_task(void *params); /* Individual servo tasks, one spawned for each servo */
-static void move_main_task(void* params); /* Main task manager for this module */
-static void move_servo_cont(void); /* Move loop */
-
-
 /* This is the INCOMING queue */
 static xQueueHandle qMove;
 
@@ -22,6 +15,14 @@ typedef struct {
 	xQueueHandle qServo;
 	int iServoID;
 }move_servoData_s;
+
+static float move_sigmoid(float time); /* Find sigmoid position */
+static void move_servo_task(void *params); /* Individual servo tasks, one spawned for each servo */
+static void move_main_task(void* params); /* Main task manager for this module */
+static void move_servo_cont(move_servoData_s *sData, int direction); /* Move loop */
+
+
+
 
 /* These are the queues going off to the servo tasks */
 static move_servoData_s ServoData[SERVO_COUNT];
@@ -91,7 +92,8 @@ static void move_main_task(void* params){
 		switch (msgMessage.messageID){
 			case M_MOVE_CONT:
 			case M_MOVE_STOP:
-				servoID = msgMessage.messageDATA;
+				/* Mask off 8bit servo number */
+				servoID = M_MOVE_SERVOMASK & msgMessage.messageDATA;
 				if (servoID >=PWM_COUNT) break;
 				msg_send(ServoData[servoID].qServo,msgMessage);
 				//printf("Starting movement on servo %d.\n",msgMessage.messageDATA);
@@ -125,29 +127,49 @@ static void move_servo_task(void *params){
 		/* Is it a Specific Move, or Continous Move command? */
 		switch (msgMessage.messageID){
 			case M_MOVE_CONT:
-				printf("Servo task %d started moving.\n", servoData.iServoID);
-				//move_servo_cont();
+				move_servo_cont(&servoData,(msgMessage.messageDATA & M_MOVE_DIRMASK));
 				break;
 			case M_MOVE_SPEC:
 				break;
 			case M_MOVE_STOP:
+				/* Shouldn't really be valid here */
 				printf("Servo task %d stopped moving.\n", servoData.iServoID);
 				//printf("Stopping movement on servo %d.\n",msgMessage.messageDATA);
 				break;
 			default:
 				break;
 		}
-		//pwm_set_pos(servoData.iServoID, position);
+		
 	}
 }
 
 
-static void move_servo_cont(void){
+void move_servo_cont(move_servoData_s *sData, int direction){
 	
-	/* Need to know direction and servo number! */
+	int quit = 0;
+	msg_message_s msgMessage;
 
-	/* Move one step of continous move */
+	while (1){
 
+		/* Quick message check */
+		if(msg_recv_noblock(sData->qServo, &msgMessage)!=ECD_NOMSG){
+			if(msgMessage.messageID!=M_MOVE_STOP){
+				printf("Expecting STOP message but received something else!\n");
+				return;
+			}
+			else{
+				printf("Servo task %d STOPPING %s.\n", sData->iServoID,direction ? "INC": "DEC");
+				return;
+			}
+		}
+	
+		/* So no message received, move one step */
+		printf("Servo task %d moving %s STEP.\n", sData->iServoID,direction ? "INC": "DEC");
+	
+		vTaskDelay(MOVE_LATENCY);
+	
+	
+	}
 
 }
 

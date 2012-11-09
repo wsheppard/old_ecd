@@ -9,7 +9,7 @@
 #include "ECD.h"
 
 /* Config */
-#define MOVE_LATENCY 1000
+#define MOVE_LATENCY 100
 #define SERVO_COUNT PWM_COUNT
 
 /* Task priority */
