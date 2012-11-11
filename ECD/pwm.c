@@ -41,9 +41,9 @@ int pwm_jump(int servo, int jump){
 	/* Get current servo position */
 	pwm_get_pos(servo, &position);
 
-	if ( (jump<0)&&(-jump>position)){
+	if ( (jump<0)&&((-jump)>(int)position)){
 		/* Add "jump" to it */
-		jump=-position;
+		jump=(-(int)position);
 	}
 
 	position += jump;

@@ -48,7 +48,6 @@ static void kp_main(void*pvParams){
 	unsigned short kp_previousData = 0;
 	unsigned short kp_currentData = 0;
 	msg_message_s mMessage;
-	unsigned int a,b,c,d;
 
 	/* Get current values */
 	//kp_getCurrent(&kp_currentData);
@@ -62,7 +61,7 @@ static void kp_main(void*pvParams){
 	vTaskDelay(1000);
 
 	/* Start checking for keypad changes and then send as message */
-	while(1){
+	for (;;){
 	
 		kp_getCurrent(&kp_currentData);
 
@@ -95,6 +94,7 @@ static void kp_getCurrent(unsigned short *KP_data){
 
 	//printf("Checking keypad....\n");
 
+	/* Now loop through all the combinations to find the button states */
 	for (x=0;x<4;x++){
 	
 		/* Set the relevant register to LOW */

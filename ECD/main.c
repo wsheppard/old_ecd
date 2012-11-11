@@ -22,7 +22,6 @@
 
 int main( void )
 {
-	xQueueHandle qKP; /* Queue handle for the KEYPAD */
 
 	printf("Starting the RTOS demo.....\n");
 	
@@ -31,7 +30,7 @@ int main( void )
 	
 		printf("Cannot start, halting system!\n");
 
-		while(1){
+		for(;;){
 		
 			Sleep(1000);
 		}

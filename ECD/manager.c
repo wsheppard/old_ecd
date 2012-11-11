@@ -60,7 +60,7 @@ static void man_main(void*params){
 
 	printf("Starting manager...\n");
 
-	while (1) {
+	for (;;) {
 	
 		/* Block wait on KEYPAD input - maybe this should be on timeout for debug 
 			purposes? */

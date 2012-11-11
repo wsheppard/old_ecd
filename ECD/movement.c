@@ -86,7 +86,7 @@ static void move_main_task(void* params){
 
 	printf("Movement main task created...\n");
 
-	while(1){
+	for(;;){
 		/* So now wait for commands to come through from the Main Manager
 		and send them to the relevant servo task to execute */
 		msg_recv_block(qMove, &msgMessage);
@@ -113,7 +113,6 @@ static void move_main_task(void* params){
 static void move_servo_task(void *params){
 
 	move_servoData_s servoData;
-	int position = 0;
 	msg_message_s msgMessage;
 
 	/* Grab local copy of the queue handle */
@@ -121,7 +120,7 @@ static void move_servo_task(void *params){
 
 	//printf("I am servo task %d.\n", servoData.iServoID);
 
-	while(1){
+	for(;;){
 
 		/* Block on queue */
 		msg_recv_block(servoData.qServo, &msgMessage);
@@ -149,7 +148,6 @@ static void move_servo_task(void *params){
 
 void move_servo_cont(move_servoData_s *sData, int direction){
 	
-	int quit = 0;
 	msg_message_s msgMessage;
 
 	if (direction & M_MOVE_DIRMASK) 
@@ -157,7 +155,7 @@ void move_servo_cont(move_servoData_s *sData, int direction){
 	else
 		ServoData[sData->iServoID].state = MOVE_STATE_DEC;
 
-	while (1){
+	for(;;){
 
 		/* Quick message check */
 		if(msg_recv_noblock(sData->qServo, &msgMessage)!=ECD_NOMSG){

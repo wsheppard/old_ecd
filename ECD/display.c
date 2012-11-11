@@ -13,7 +13,7 @@
 #include "pwm.h"
 #include "movement.h"
 
-void display_main(void*params);
+static void display_main(void*params);
 
 
 
@@ -40,7 +40,7 @@ void display_main(void*params){
 	int state[4];
 	int x;
 
-	while(1){
+	for(;;){
 	
 		for(x=0;x<PWM_COUNT;x++){ 
 			pwm_get_pos(x,&pos[x]);
